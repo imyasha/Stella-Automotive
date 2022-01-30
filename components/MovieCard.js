@@ -10,7 +10,7 @@ export default function MovieCard({ title, year, type, poster, id }) {
   const onMouseOut = () => setRaised(false);
   return (
     <Card
-      sx={{ width: "calc(20% - 16px)", maxWidth: 345, m: 1 }}
+      sx={{ width: "100%", maxWidth: 345, m: 1, height: "auto" }}
       onMouseOut={onMouseOut}
       onMouseOver={onMouseOver}
       raised={raised}

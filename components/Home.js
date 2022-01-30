@@ -5,6 +5,7 @@ import {
   Box,
   Pagination,
   Stack,
+  Link,
 } from "@mui/material";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -12,9 +13,9 @@ import SearchAppBar from "./SearchAppBar";
 import MovieCard from "./MovieCard";
 import { getMoviesByTitle, getDetail } from "../store/movies/action";
 
-const Home = ({ movies, loading, getMoviesByTitle}) => {
+const Home = ({ movies, loading, getMoviesByTitle }) => {
   const [keyword, setKeyword] = useState("");
-  
+
   useEffect(() => {
     if (keyword) {
       const debounceFn = setTimeout(() => {
@@ -28,26 +29,46 @@ const Home = ({ movies, loading, getMoviesByTitle}) => {
   return (
     <>
       <SearchAppBar keyword={keyword} setKeyword={setKeyword} />
-      <Container sx={{ mt: 4, display: "flex", flexWrap: "wrap" }}>
+      <Container>
         {loading ? (
           <Box sx={{ position: "fixed", top: "50%", left: "50%" }}>
             <CircularProgress size={"5rem"} />
           </Box>
         ) : (
           <>
-            {movies.map((movie) => (
-              <MovieCard
-                key={movie.imdbID}
-                title={movie.Title}
-                year={movie.Year}
-                type={movie.Type}
-                poster={movie.Poster}
-                id={movie.imdbID}
-              />
-            ))}
-            <Stack spacing={2} sx={{ margin: "auto", mt: "1rem" }}>
+            <Box sx={{ mt: 4, display: "flex", flexWrap: "wrap" }}>
+              {movies.map((movie) => (
+                <Link
+                  key={movie.imdbID}
+                  href={`movie/${movie.imdbID}`}
+                  sx={{
+                    width: "calc(20% - 16px)",
+                    minWidth: 220,
+                    m: "auto",
+                    height: "auto",
+                  }}
+                >
+                  <MovieCard
+                    title={movie.Title}
+                    year={movie.Year}
+                    type={movie.Type}
+                    poster={movie.Poster}
+                    id={movie.imdbID}
+                  />
+                </Link>
+              ))}
+            </Box>
+            <Box
+              spacing={2}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                margin: "auto",
+                mt: "1rem",
+              }}
+            >
               <Pagination count={10} showFirstButton showLastButton />
-            </Stack>
+            </Box>
           </>
         )}
       </Container>
