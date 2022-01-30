@@ -4,19 +4,24 @@ const moviesInitialState = {
   movies: [],
   movie: {},
   totalCount: 0,
+  errors: {},
 };
 
 const movieReducer = (state = moviesInitialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case movieActionTypes.GET_MOVIES:
-      return {...state, ...action.payload, loading: false};
+      return { ...state, ...action.payload, loading: false };
     case movieActionTypes.GET_MOVIE:
-      return {...state, ...action.payload, loading: false};
+      return { ...state, ...action.payload, loading: false };
     case movieActionTypes.LOADING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
+    case movieActionTypes.GET_ERRORS:
+      return { ...state, errors: action.payload, loading: false };
+    case movieActionTypes.CLEAR_ERRORS:
+      return { ...state, errors: {} };
     default:
       return state;
   }
-}
+};
 
 export default movieReducer;

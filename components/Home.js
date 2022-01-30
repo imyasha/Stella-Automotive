@@ -4,16 +4,18 @@ import {
   Container,
   Box,
   Pagination,
-  Stack,
   Link,
+  Typography,
 } from "@mui/material";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import SearchAppBar from "./SearchAppBar";
 import MovieCard from "./MovieCard";
+import { useTheme } from "@mui/material/styles";
 import { getMoviesByTitle, getDetail, getPage } from "../store/movies/action";
 
-const Home = ({ movies, loading, getMoviesByTitle, getPage }) => {
+const Home = ({ movies, loading, errors, getMoviesByTitle, getPage }) => {
+  const theme = useTheme();
   const [keyword, setKeyword] = useState("harry");
 
   useEffect(() => {
@@ -36,8 +38,32 @@ const Home = ({ movies, loading, getMoviesByTitle, getPage }) => {
       <SearchAppBar keyword={keyword} setKeyword={setKeyword} />
       <Container>
         {loading ? (
-          <Box sx={{ height: "80vh" }}>
+          <Box
+            sx={{
+              height: "80vh",
+              margin: "auto",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <CircularProgress size={"5rem"} />
+          </Box>
+        ) : Object.keys(errors).length ? (
+          <Box
+            sx={{
+              height: "80vh",
+              margin: "auto",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h3" color={theme.palette.grey.A400}>
+              ERROR| {errors.errorSearch}
+            </Typography>
           </Box>
         ) : (
           <>
@@ -90,6 +116,7 @@ const mapStateToProps = (state) => {
   return {
     movies: state.movies.movies,
     loading: state.movies.loading,
+    errors: state.movies.errors,
   };
 };
 
