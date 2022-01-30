@@ -12,6 +12,7 @@ export const getMovies = () => (dispatch) => {
       if (res.data.Response == "True") {
         const payload = {
           movies: res.data.Search,
+          totalCounts: res.data.totalResults,
         };
         dispatch({
           type: movieActionTypes.GET_MOVIES,
@@ -41,6 +42,7 @@ export const getMoviesByTitle = (title) => (dispatch) => {
       if (res.data.Response == "True") {
         const payload = {
           movies: res.data.Search,
+          totalCounts: res.data.totalResults,
         };
         dispatch({
           type: movieActionTypes.GET_MOVIES,

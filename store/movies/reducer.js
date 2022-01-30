@@ -3,7 +3,7 @@ const moviesInitialState = {
   loading: false,
   movies: [],
   movie: {},
-  totalCount: 0,
+  totalCounts: 0,
   errors: {},
 };
 

@@ -14,7 +14,7 @@ import MovieCard from "./MovieCard";
 import { useTheme } from "@mui/material/styles";
 import { getMoviesByTitle, getDetail, getPage } from "../store/movies/action";
 
-const Home = ({ movies, loading, errors, getMoviesByTitle, getPage }) => {
+const Home = ({ movies, loading, errors, totalCounts, getMoviesByTitle, getPage }) => {
   const theme = useTheme();
   const [keyword, setKeyword] = useState("harry");
 
@@ -101,7 +101,7 @@ const Home = ({ movies, loading, errors, getMoviesByTitle, getPage }) => {
           }}
         >
           <Pagination
-            count={10}
+            count={Math.ceil(totalCounts / 10)}
             showFirstButton
             showLastButton
             onChange={handleGetPage}
@@ -117,6 +117,7 @@ const mapStateToProps = (state) => {
     movies: state.movies.movies,
     loading: state.movies.loading,
     errors: state.movies.errors,
+    totalCounts: state.movies.totalCounts,
   };
 };
 
