@@ -40,9 +40,9 @@ export const getMoviesByTitle = (title) => (dispatch) => {
 export const getDetail = (id) => (dispatch) => {
   dispatch(setLoading());
   axios
-    .get(`${process.env.OMDB_URL}?i=${id}&apikey=${process.env.APIKEY}`)
+    .get(`${process.env.OMDB_URL}?i=${id}&apikey=${process.env.APIKEY}&plot=full`)
     .then((res) => {
-      const payload = { movie: res };
+      const payload = { movie: res.data };
       dispatch({
         type: movieActionTypes.GET_MOVIE,
         payload,
@@ -61,7 +61,7 @@ export const getPage =
         `${process.env.OMDB_URL}?s=${keyword}&page=${pageIndex}&apikey=${process.env.APIKEY}`
       )
       .then((res) => {
-        const payload = { movie: res };
+        const payload = { movie: res.data };
         dispatch({
           type: movieActionTypes.GET_MOVIE,
           payload,

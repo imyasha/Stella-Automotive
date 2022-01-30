@@ -22,6 +22,7 @@ const reducer = (state, action) => {
       ...action.payload, // apply delta from hydration
     }
     if (state.movies.length) nextState.movies = state.movies // preserve movies value on client side navigation
+    if (Object.keys(state.movies).length) nextState.movie = state.movie // preserve movies value on client side navigation
     return nextState
   } else {
     return combinedReducer(state, action)

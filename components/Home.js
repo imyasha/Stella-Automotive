@@ -10,10 +10,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import SearchAppBar from "./SearchAppBar";
 import MovieCard from "./MovieCard";
-import { getMoviesByTitle } from "../store/movies/action";
+import { getMoviesByTitle, getDetail } from "../store/movies/action";
 
 const Home = ({ movies, loading, getMoviesByTitle}) => {
   const [keyword, setKeyword] = useState("");
+  
   useEffect(() => {
     if (keyword) {
       const debounceFn = setTimeout(() => {
@@ -23,6 +24,7 @@ const Home = ({ movies, loading, getMoviesByTitle}) => {
       return () => clearTimeout(debounceFn);
     }
   }, [keyword]);
+
   return (
     <>
       <SearchAppBar keyword={keyword} setKeyword={setKeyword} />
@@ -63,6 +65,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getMoviesByTitle: bindActionCreators(getMoviesByTitle, dispatch),
+    getDetail: bindActionCreators(getDetail, dispatch),
   };
 };
 
