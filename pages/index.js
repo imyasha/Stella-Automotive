@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Home from "../components/Home";
@@ -6,9 +5,6 @@ import { getMovies } from "../store/movies/action";
 import { wrapper } from "../store/store";
 
 const Index = (props) => {
-  useEffect(() => {
-    props.getMovies();
-  }, [])
   return <Home />;
 };
 

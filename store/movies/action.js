@@ -61,9 +61,11 @@ export const getPage =
         `${process.env.OMDB_URL}?s=${keyword}&page=${pageIndex}&apikey=${process.env.APIKEY}`
       )
       .then((res) => {
-        const payload = { movie: res.data };
+        const payload = {
+          movies: res.data.Search,
+        };
         dispatch({
-          type: movieActionTypes.GET_MOVIE,
+          type: movieActionTypes.GET_MOVIES,
           payload,
           loading: false,
         });

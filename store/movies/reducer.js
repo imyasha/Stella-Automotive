@@ -2,7 +2,8 @@ import { movieActionTypes } from "./types";
 const moviesInitialState = {
   loading: false,
   movies: [],
-  movie: {}
+  movie: {},
+  totalCount: 0,
 };
 
 const movieReducer = (state = moviesInitialState, action) => {

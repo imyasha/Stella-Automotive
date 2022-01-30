@@ -11,10 +11,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import SearchAppBar from "./SearchAppBar";
 import MovieCard from "./MovieCard";
-import { getMoviesByTitle, getDetail } from "../store/movies/action";
+import { getMoviesByTitle, getDetail, getPage } from "../store/movies/action";
 
-const Home = ({ movies, loading, getMoviesByTitle }) => {
-  const [keyword, setKeyword] = useState("");
+const Home = ({ movies, loading, getMoviesByTitle, getPage }) => {
+  const [keyword, setKeyword] = useState("harry");
 
   useEffect(() => {
     if (keyword) {
@@ -26,12 +26,17 @@ const Home = ({ movies, loading, getMoviesByTitle }) => {
     }
   }, [keyword]);
 
+  const handleGetPage = (event, pageIndex) => {
+    event.preventDefault();
+    getPage({ pageIndex, keyword });
+  };
+
   return (
     <>
       <SearchAppBar keyword={keyword} setKeyword={setKeyword} />
       <Container>
         {loading ? (
-          <Box sx={{ position: "fixed", top: "50%", left: "50%" }}>
+          <Box sx={{ height: "80vh" }}>
             <CircularProgress size={"5rem"} />
           </Box>
         ) : (
@@ -58,19 +63,24 @@ const Home = ({ movies, loading, getMoviesByTitle }) => {
                 </Link>
               ))}
             </Box>
-            <Box
-              spacing={2}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                margin: "auto",
-                mt: "1rem",
-              }}
-            >
-              <Pagination count={10} showFirstButton showLastButton />
-            </Box>
           </>
         )}
+        <Box
+          spacing={2}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "auto",
+            mt: "1rem",
+          }}
+        >
+          <Pagination
+            count={10}
+            showFirstButton
+            showLastButton
+            onChange={handleGetPage}
+          />
+        </Box>
       </Container>
     </>
   );
@@ -87,6 +97,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getMoviesByTitle: bindActionCreators(getMoviesByTitle, dispatch),
     getDetail: bindActionCreators(getDetail, dispatch),
+    getPage: bindActionCreators(getPage, dispatch),
   };
 };
 
